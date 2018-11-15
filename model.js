@@ -2,6 +2,7 @@ let video;
 let poseNet;
 let poses = [];
 let skeletons = [];
+let minConfidence = 0.75;
 
 function setup() {
   createCanvas(640, 480);
@@ -29,7 +30,28 @@ function draw() {
   // We can call both functions to draw all keypoints and the skeletons
   drawKeypoints();
   drawSkeleton();
+  printKeypoints();
 }
+
+// A function to draw ellipses over the detected keypoints
+function printKeypoints()  {
+  // Loop through all the poses detected
+  for (let i = 0; i < poses.length; i++) {
+    // For each pose detected, loop through all the keypoints
+    for (let j = 0; j < poses[i].pose.keypoints.length; j++) {
+      // A keypoint is an object describing a body part (like rightArm or leftShoulder)
+      let keypoint = poses[i].pose.keypoints[j];
+      // Only draw an ellipse is the pose probability is bigger than the minimum confidence
+      if (keypoint.score > minConfidence) {
+        console.log(keypoint, keypoint.position.x, keypoint.position.y);
+      }
+    }
+  }
+}
+
+// function getKeypoint() { //get leftShoulder
+//   poses.pose.keypoints
+// }
 
 // A function to draw ellipses over the detected keypoints
 function drawKeypoints()  {
@@ -39,8 +61,8 @@ function drawKeypoints()  {
     for (let j = 0; j < poses[i].pose.keypoints.length; j++) {
       // A keypoint is an object describing a body part (like rightArm or leftShoulder)
       let keypoint = poses[i].pose.keypoints[j];
-      // Only draw an ellipse is the pose probability is bigger than 0.2
-      if (keypoint.score > 0.2) {
+      // Only draw an ellipse is the pose probability is bigger than the minimum confidence
+      if (keypoint.score > minConfidence) {
         fill(255, 0, 0);
         noStroke();
         ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
