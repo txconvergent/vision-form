@@ -33,8 +33,12 @@ function draw() {
    drawKeypoints();
   // drawSkeleton();
   // printKeypoints();
-   //console.log(model_getPoseData());
-   console.log(model_getPartCoordinate("nose", 0.1));
+   // console.log(model_getPoseData());
+   // console.log(determineMovement());
+   // console.log(model_getPartCoordinate("nose", minConfidence));
+   if (bodyPosIsValid()) {
+     determineMovement();
+   }
 }
 
 
