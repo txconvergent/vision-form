@@ -6,7 +6,8 @@ let skeletons = [];
 let minConfidence = 0.75;
 
 function setup() {
-  createCanvas(640, 480);
+  var cnv = createCanvas(640, 480);
+  cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
   video = createCapture(VIDEO);
   video.size(width, height);
 
