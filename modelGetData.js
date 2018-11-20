@@ -32,7 +32,7 @@ function model_getPartCoordinate(bodyPartName, minConfidence) {
             // Only draw an ellipse is the pose probability is bigger than the minimum confidence
             if (keypoint.score > minConfidence && keypoint.part == bodyPartName) {
                //get the element in the array for a chosen body part
-               return keypoint.position;
+               return [keypoint.position, keypoint.score];
             }          
        }
   }
