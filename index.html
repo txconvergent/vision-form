@@ -27,7 +27,10 @@
                 <button
                     class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse d-xl-flex justify-content-xl-center align-items-xl-center" id="navcol-1">
-                        <ul class="nav navbar-nav mr-auto"></ul><span class="d-xl-flex align-items-xl-center navbar-text actions"> <a href="#" class="login"></a><a class="btn btn-light text-nowrap d-xl-flex align-items-xl-center action-button" role="button" href="#" style="padding: 12px;margin: -3px;width: 113px;background-color: rgb(241,98,106);color: rgb(18,15,15);">Calibrate&nbsp;<i class="material-icons">accessibility</i></a></span></div>
+                        <ul class="nav navbar-nav mr-auto"></ul><span class="d-xl-flex align-items-xl-center navbar-text actions"> <a href="#" class="login"></a>
+                          <a class="btn btn-light text-nowrap d-xl-flex align-items-xl-center action-button" role="button" href="#" style="padding: 12px;margin: -3px;width: 113px;background-color: rgb(241,98,106);color: rgb(18,15,15);">
+                            Calibrate&nbsp;
+                          <i class="material-icons">accessibility</i></a></span></div>
             </div>
         </nav>
     </div>
@@ -44,7 +47,7 @@
     <div class="container d-flex d-xl-flex justify-content-center align-items-center align-content-center justify-content-xl-center align-items-xl-center">
         <div>
                 <link rel="stylesheet" href="assets/css/styles.css">
-                
+
                 <div id="canvasContainer"></div>
                     <canvas id="defaultCanvas0" width="640" height="640" style="width: 320px; height: 240px;"></canvas>
                 </div>
@@ -52,7 +55,13 @@
                 <script src="modelDrawData.js"></script>
                 <script src="modelGetData.js"></script>
                 <script src="modelDetermineMovement.js"></script>
+                <script src="determineFormQuality.js"></script>
+
         </div>
+    </div>
+
+    <div class="feedbackBar">
+        <p id="feedback">Calibrating...</p>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
