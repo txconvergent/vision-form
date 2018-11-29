@@ -4,10 +4,13 @@ let poseNet;
 let poses = [];
 let skeletons = [];
 let minConfidence = 0.75;
-let oneTimeTasks = 0;
 let frames = 0;
-let num = 0;
 let myMovement;
+let myOrientation;
+let calibrationTime = 300;
+let totalTime = 1000; //totalTime = exerciseTime - calibrationTime
+let numReps;
+let listOfFrameInfo;
 
 
 function setup() {
@@ -39,34 +42,42 @@ function draw() {
 
   // We can call both functions to draw all keypoints and the skeletons
   drawKeypoints();
-  // drawSkeleton();
+  drawSkeleton();
   // printKeypoints();
-  // console.log(model_getPoseData());
+  console.log(model_getPoseData());
   // console.log(determineMovement());
   // console.log(model_getPartCoordinate("nose", minConfidence));
 
 
-  if (oneTimeTasks < 200) {
+  if (frames < calibrationTime) {
+    //initial calibration
     if (bodyPosIsValid()) {
-      num += determineMovement() + 0.0;
-
-
-      oneTimeTasks++;
+      //determine the movement
+      myMovement += determineMovement();
+      //determine orientation
+      if (determineOrientation() != undefined) {
+        myOrientation += determineOrientation();
+      }
+      frames++;
     }
-    else {
-      console.log("invalid");
-    }
-  }
-  else {
-    //everything else
-    console.log(determineMovement());
+  } else if (frames == calibrationTime + 1) {
+    //determine exercise and orientation
+    myMovement = Math.round(0.0 + myMovement / calibrationTime);
+    myOrientation = Math.round(0.0 + myOrientation / calibrationTime);
+    changeTextLive(myMovement);
+    frames++;
+  } else if (frames < totalTime) {
+    //analyze exercise for (totalTime - calibrationTime) microseconds
+    listOfFrameInfo.add(getFormQuality(movement, orientation));
+    frames++;
+  } else {
+    //process data and open report html
 
   }
 
 
-  // if (oneTimeTasks >= 1000) {
-  //   //open a new html page, pass it
-  // }
+
+
 
 
 }
