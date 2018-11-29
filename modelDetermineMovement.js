@@ -17,7 +17,7 @@ function determineMovement() {
   }
 
   //determine exercise
-  if (headPos != undefined && kneePos != undefined && wristPos != undefined) { //simple check, fixes the last bug we ran into
+  if (headPos != undefined && kneePos != undefined && wristPos != undefined) {
     if (headPos[0].y < kneePos[0].y - 50) {
       //movement is either SQUAT or DEAD
       if (wristPos[0].y - headPos[0].y < 70) {
@@ -30,7 +30,7 @@ function determineMovement() {
       //movement is BENCH
       move = movement.BENCH;
     }
-     console.log(move);
+     return move;
   }
 }
 
