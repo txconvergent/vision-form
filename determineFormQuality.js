@@ -4,50 +4,45 @@ var COLOR = Object.freeze({"BLUE":1, "GREEN":2, "YELLOW":3, "RED":4});
 let minConfidence = 0.8;
 
 
-function getFormQuality(exercise, direction) { //returns [boolean howGoodFormIs, boolean zone]
-  if (exercise == movement.SQUAT) {
+function getFormQuality(exercise, direction, allowedLowestY, repStartY) { //returns [boolean howGoodFormIs, boolean zone]
     //SQUAT
-    return getSquatQuality(direction);
-  }
-  else if (exercise == movement.DEAD) {
-    //DEADLIFT
-    return getDeadQuality(direction);
-  }
-  else {
-    //BENCH
-    return getBenchQuality(direction);
-  }
+    return getSquatQuality(direction, allowedLowestY, repStartY);
 }
 
 function getSquatQuality(direction, allowedLowestY, repStartY) {
   //gets squat data
-  let data = getSquatData(direction);
+
+
   //store the current formquality given this frame
   let goodForm = false;
 
   //if we have all our data
-  if (data != null) {
+
+  if (getHeadY() != undefined) {
+    let headY = getHeadY()[0].y;
+    console.log(headY);
     //store the current color of the skeleton
-    let skeletonColor = 0;
-    //get the head's y position in the frame
-    headY = data[0][0][1];
+    let skeletonColor = COLOR.YELLOW;
 
     //check if the current headY is in blue zone (repStartY +- 10)
     if (headY < repStartY + 10){
+      console.log("BLUE!!");
       skeletonColor = COLOR.BLUE;
       //rep not started (or rep has ended), change goodForm
       goodForm = true;
     }
 
     //check if we're in the yellow zone (allowedLowestY +- 10)
-    else if (headY >= allowedLowestY - 10 && headY <= allowedLowestY + 10){
+    else if (headY >= allowedLowestY - 40 && headY <= allowedLowestY + 50){
+      console.log("YELLOW!!");
       //set the color
-      skeletonColor = COLOR.YELLOW;
+      skeletonColor = COLOR.GREEN;
       goodForm = true;
     }
 
     //check if we're in the red zone ( > allowedLowestY + 10)
-    else if (headY > allowedLowestY + 10){
+    else if (headY > allowedLowestY + 20){
+      console.log("RED!!");
       //set the color
       skeletonColor = COLOR.RED;
       goodForm = false;
@@ -60,7 +55,7 @@ function getSquatQuality(direction, allowedLowestY, repStartY) {
 }
 
 function getSquatData(direction) {
-  let head = model_getPartCoordinate("nose", minConfidence);
+  let head = getHeadY();
   let hip = model_getPartCoordinate("rightHip", minConfidence);
   let knee = model_getPartCoordinate("rightKnee", minConfidence);
 
@@ -73,11 +68,5 @@ function getSquatData(direction) {
 }
 
 function changeTextLive(exercise) {
-  if (exercise == movement.SQUAT) {
     document.getElementById("feedback").innerHTML = "Squat Detected!";
-  } else if (exercise == movement.DEAD) {
-    document.getElementById("feedback").innerHTML = "Deadlift Detected!";
-  } else {
-    document.getElementById("feedback").innerHTML = "Bench Press Detected!";
-  }
 }
