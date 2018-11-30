@@ -11,11 +11,12 @@ function drawKeypoints(Color) {
       // Only draw an ellipse is the pose probability is bigger than the minimum confidence
       if (keypoint.score > minConfidence) {
 
-        if      (Color = COLOR.BLUE)   { fill(0, 0, 255);  }
-        else if (Color = COLOR.GREEN)  { fill(0, 255, 0);  }
-        else if (Color = COLOR.YELLOW) { fill(255, 255, 0);  }
-        else if (Color = COLOR.RED)    { fill(255, 0, 00); }
-        
+
+        if      (Color == 1)   { fill(0, 0, 255);  }
+        else if (Color == 2)  { fill(0, 255, 0);  }
+        else if (Color == 3) { fill(255, 255, 0);  }
+        else if (Color == 4) { fill(255, 0, 0); }
+
         noStroke();
         ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
       }
@@ -31,12 +32,18 @@ function drawSkeleton(Color) {
     for (let j = 0; j < poses[i].skeleton.length; j++) {
       let partA = poses[i].skeleton[j][0];
       let partB = poses[i].skeleton[j][1];
-      
-      if      (Color = COLOR.BLUE)   { fill(0, 0, 255);  }
-      else if (Color = COLOR.GREEN)  { fill(0, 255, 0);  }
-      else if (Color = COLOR.YELLOW) { fill(255, 255, 0);  }
-      else if (Color = COLOR.RED)    { fill(255, 0, 00); }
-    
+
+      strokeWeight(2);
+
+      stroke(255, 0, 0);
+      if (Color == 1) {
+        stroke(0, 0, 255);
+      } else if (Color == 2) {
+        stroke(0, 255, 0);
+      } else if (Color == 3) {
+        stroke(255, 255, 0);
+      }
+
       line(partA.position.x, partA.position.y, partB.position.x, partB.position.y);
     }
   }
