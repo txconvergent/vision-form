@@ -20,7 +20,7 @@ function model_getPoseData() {
 }
 
 //function to get a particular part's coordinate
-//returns an array of[x, y] if the detection was above 
+//returns an array of[x, y] if the detection was above
 //minConfidence
 function model_getPartCoordinate(bodyPartName, minConfidence) {
     // Loop through all the poses detected
@@ -33,7 +33,30 @@ function model_getPartCoordinate(bodyPartName, minConfidence) {
             if (keypoint.score > minConfidence && keypoint.part == bodyPartName) {
                //get the element in the array for a chosen body part
                return [keypoint.position, keypoint.score];
-            }          
+            }
        }
   }
+}
+
+function getHeadY() {
+  if (model_getPartCoordinate("nose", minConfidence) != undefined) {
+    return model_getPartCoordinate("nose", minConfidence);
+  } else if (model_getPartCoordinate("leftEar", minConfidence) != undefined) {
+    return model_getPartCoordinate("leftEar", minConfidence);
+  } else if (model_getPartCoordinate("rightEar", minConfidence) != undefined) {
+    return model_getPartCoordinate("rightEar", minConfidence);
+  } else if (model_getPartCoordinate("leftEye", minConfidence) != undefined) {
+    return model_getPartCoordinate("leftEye", minConfidence);
+  } else if (model_getPartCoordinate("rightEye", minConfidence) != undefined) {
+    return model_getPartCoordinate("rightEye", minConfidence);
+  } else {
+    return undefined;
+  }
+
+}
+
+function getScore(listOfRepInfo){
+    for (var i = 0; i < listOfRepInfo.length; i++) {
+      console.log(listOfRepInfo[i]);
+    }
 }
