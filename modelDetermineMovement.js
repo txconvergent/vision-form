@@ -5,16 +5,9 @@ function determineMovement() {
   let move;
 
   // get head position, knee position, and orientation of the user
-  let orientation = determineOrientation();
   let headPos = model_getPartCoordinate("nose", minConfidence);
-  let kneePos, wristPos;
-  if (orientation == orientation.LEFT) {
-    kneePos = model_getPartCoordinate("leftKnee", minConfidence);
-    wristPos = model_getPartCoordinate("leftWrist", minConfidence);
-  } else {
-    kneePos = model_getPartCoordinate("rightKnee", minConfidence);
-    wristPos = model_getPartCoordinate("rightWrist", minConfidence);
-  }
+  let kneePos = model_getPartCoordinate("leftKnee", minConfidence);
+  let wristPos = model_getPartCoordinate("leftWrist", minConfidence);
 
   //determine exercise
   if (headPos != undefined && kneePos != undefined && wristPos != undefined) {
@@ -22,7 +15,8 @@ function determineMovement() {
       //movement is either SQUAT or DEAD
       if (wristPos[0].y - headPos[0].y < 70) {
         move = movement.SQUAT;
-      } else {
+      }
+      else {
         move = movement.DEAD;
       }
     }
@@ -32,6 +26,7 @@ function determineMovement() {
     }
      return move;
   }
+  return undefined;
 }
 
 //NOTE: method can almost perfectly read squats and deadlifts (it prints 2
