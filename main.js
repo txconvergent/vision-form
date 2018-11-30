@@ -104,6 +104,7 @@ function draw() {
 
           numRedFrames = 0;
       }
+      
 
 
       //
@@ -122,10 +123,8 @@ function draw() {
   } else {
     currentColor = COLOR.BLUE;
 
-    console.log(numReps);
-    //process data and open report html
-    //console.log(listOfRepInfo);
-    // console.log(currentColor);
+    
+    window.open('results.html')
   }
 
 
