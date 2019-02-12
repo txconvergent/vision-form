@@ -48,6 +48,8 @@ function getSquatQuality(direction, allowedLowestY, repStartY) {
       goodForm = false;
     }
 
+    console.log("Approx angle: " + getKneeAngle(headY, allowedLowestY, repStartY) + "˚");
+
     return [goodForm, skeletonColor];
   }
 
@@ -69,4 +71,9 @@ function getSquatData(direction) {
 
 function changeTextLive(exercise) {
     document.getElementById("feedback").innerHTML = "Squat Detected!";
+}
+
+function getKneeAngle(headY, allowedLowestY, repStartY){
+  //return the apporx angle given the headY
+  return (headY / (allowedLowestY - repStartY)) * 180;
 }
